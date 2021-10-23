@@ -28,6 +28,7 @@ public slots:
     void DownloadEngine();
     void AddProject();
     void AddProjectAt(QString filePath);
+    void LaunchEditor();
 
 private:
     Ui::MainWindow *ui;

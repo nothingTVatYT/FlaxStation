@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->btAddEngine, &QCommandLinkButton::pressed, this, &MainWindow::AddInstalledEngine);
     QObject::connect(ui->btDownloadEngine, &QCommandLinkButton::pressed, this, &MainWindow::DownloadEngine);
     QObject::connect(ui->btAddProject, &QCommandLinkButton::pressed, this, &MainWindow::AddProject);
+    QObject::connect(ui->listProjects, &QTableView::doubleClicked, this, &MainWindow::LaunchEditor);
 
     OpenLink(LINKNEWS);
 
@@ -186,4 +187,10 @@ void MainWindow::AddProjectAt(QString filepath)
     } else {
         QMessageBox::warning(this, tr("Error loading project"), tr("Could not load project at ") + filepath);
     }
+}
+
+void MainWindow::LaunchEditor()
+{
+    FlaxProject project = projects.item(ui->listProjects->selectionModel()->selectedIndexes().first().row());
+    QMessageBox::information(this, tr("TODO"), tr("Launch suitable FlaxEditor for project ") + project.path);
 }
