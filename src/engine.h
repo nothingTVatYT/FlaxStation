@@ -11,6 +11,9 @@ public:
     QString name;
     QString version;
 
+    QString editorPath();
+
+    static QString osName();
 private:
 };
 

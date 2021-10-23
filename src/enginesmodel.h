@@ -19,6 +19,8 @@ public:
     void add(const Engine engine);
     Engine item(int index);
     Engine * getEngineByPath(QString path);
+    int getEnginesByVersion(QString version, QList<Engine> *result);
+    int getEnginesByMinimalVersion(QString version, QList<Engine> *result);
 private:
     QList<Engine> entries;
 };

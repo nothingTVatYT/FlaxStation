@@ -79,3 +79,49 @@ Engine *EnginesModel::getEngineByPath(QString path)
     }
     return NULL;
 }
+
+int EnginesModel::getEnginesByVersion(QString version, QList<Engine> *result)
+{
+    for (int i = 0; i < entries.size(); i++)
+    {
+        if (entries[i].version == version)
+        {
+            result->append(entries[i]);
+        }
+    }
+    return result->size();
+}
+
+bool versionIsHigherOrEqual(QString version1, QString version2)
+{
+    QStringList v1 = version1.split('.');
+    QStringList v2 = version2.split('.');
+    for (int i = 0; i < v1.length(); i++)
+    {
+        if (v2.length() < i)
+        {
+            int v1i = v1[i].toInt();
+            int v2i = v2[i].toInt();
+            if (v2i > v1i)
+            {
+                return false;
+            } else if (v2i < v1i)
+            {
+                return true;
+            }
+        }
+    }
+    return true;
+}
+
+int EnginesModel::getEnginesByMinimalVersion(QString version, QList<Engine> *result)
+{
+    for (int i = 0; i < entries.size(); i++)
+    {
+        if (versionIsHigherOrEqual(entries[i].version, version))
+        {
+            result->append(entries[i]);
+        }
+    }
+    return result->size();
+}

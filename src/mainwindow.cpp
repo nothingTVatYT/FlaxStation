@@ -1,10 +1,11 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSettings>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QProcess>
 
 static const char * LINKNEWS = "https://flaxengine.com/";
 static const char * LINKSTORE = "https://flaxengine.com/download/";
@@ -192,5 +193,29 @@ void MainWindow::AddProjectAt(QString filepath)
 void MainWindow::LaunchEditor()
 {
     FlaxProject project = projects.item(ui->listProjects->selectionModel()->selectedIndexes().first().row());
-    QMessageBox::information(this, tr("TODO"), tr("Launch suitable FlaxEditor for project ") + project.path);
+    // try to get an engine with an exactly matching version
+    QList<Engine> matchingEngines;
+    QString editor;
+    if (engines.getEnginesByVersion(project.engineVersion, &matchingEngines) == 0)
+    {
+        // find engines with a higher or matching version
+        engines.getEnginesByMinimalVersion(project.engineVersion, &matchingEngines);
+    }
+    if (matchingEngines.isEmpty()) {
+        QMessageBox::critical(this, tr("Error"), tr("Cannot find a suitable editor"));
+        return;
+    }
+    for (Engine e : qAsConst(matchingEngines)) {
+        editor = e.editorPath();
+        if (!editor.isEmpty()) break;
+    }
+    QStringList arguments = {"-project", project.path};
+    QProcess process;
+    process.setProgram(editor);
+    process.setArguments(arguments);
+    process.setWorkingDirectory(project.path.left(project.path.lastIndexOf('/')-1));
+    if (!process.startDetached())
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Cannot launch editor %1: %2").arg(editor, process.errorString()));
+    }
 }
