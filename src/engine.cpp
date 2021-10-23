@@ -37,6 +37,6 @@ QString Engine::editorPath()
     {
         return path + "/Binaries/Editor/" + osname + "/Debug/" + executable;
     }
-    qDebug() << "No FlaxEditor at " << path << "/Binaries/Editor/*/" << osname;
+    qDebug() << "No FlaxEditor at " << path << "/Binaries/Editor/" << osname;
     return "";
 }
