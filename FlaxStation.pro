@@ -9,11 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/engine.cpp \
+    src/enginesmodel.cpp \
+    src/flaxproject.cpp \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/projectsmodel.cpp
 
 HEADERS += \
-    src/mainwindow.h
+    src/engine.h \
+    src/enginesmodel.h \
+    src/flaxproject.h \
+    src/mainwindow.h \
+    src/projectsmodel.h
 
 FORMS += \
     src/mainwindow.ui

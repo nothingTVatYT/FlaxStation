@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QDir>
+#include "enginesmodel.h"
+#include "projectsmodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,12 +22,20 @@ public slots:
     void OpenStoreLink();
     void OpenLearnLink();
     void ShowEngines();
+    void ShowProjects();
     void AddInstalledEngine();
+    void AddInstalledEngineAt(QDir dir);
+    void DownloadEngine();
+    void AddProject();
+    void AddProjectAt(QString filePath);
 
 private:
     Ui::MainWindow *ui;
     void OpenLink(QString link);
+    void ReadSettings();
     void SaveSettings();
-    QList<QDir> enginePaths;
+    EnginesModel engines;
+    ProjectsModel projects;
+
 };
 #endif // MAINWINDOW_H
