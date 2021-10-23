@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     OpenLink(LINKNEWS);
 
+    QCoreApplication::setOrganizationName("FlaxTechnology");
+    QCoreApplication::setOrganizationDomain("flaxengine.com");
     ReadSettings();
 
     ui->listEngines->setModel(&engines);
@@ -81,7 +83,7 @@ void MainWindow::ShowProjects()
 
 void MainWindow::ReadSettings()
 {
-    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    QSettings settings;
     int nEngines = settings.beginReadArray("engines");
     for (int i = 0; i < nEngines; i++)
     {
@@ -100,7 +102,7 @@ void MainWindow::ReadSettings()
 
 void MainWindow::SaveSettings()
 {
-    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    QSettings settings;
 
     settings.beginWriteArray("engines");
     for (int i = 0; i < engines.rowCount(); i++)
